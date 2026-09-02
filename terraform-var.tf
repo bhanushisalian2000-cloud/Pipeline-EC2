@@ -1,0 +1,6 @@
+aws_region     = "ap-south-1"
+ami_id         = "ami-06158a479c7fc4bd7"
+instance_type  = "t2.micro"
+key_name       = "devops_exp_key"
+project_name   = "terraform-demo"
+environment    = "dev"
