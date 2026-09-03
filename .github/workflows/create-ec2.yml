@@ -8,17 +8,10 @@ permissions:
   contents: read
 
 jobs:
-  test-aws:
+  create-ec2:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Show GitHub information
-        run: |
-          echo "Repository: $GITHUB_REPOSITORY"
-          echo "Branch: $GITHUB_REF_NAME"
-          echo "Ref: $GITHUB_REF"
-          echo "Event: $GITHUB_EVENT_NAME"
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v6
         with:
@@ -28,3 +21,18 @@ jobs:
       - name: Verify AWS
         run: |
           aws sts get-caller-identity
+
+      - name: Create EC2 instance
+        run: |
+          INSTANCE_ID=$(aws ec2 run-instances \
+            --image-id ami-06158a479c7fc4bd7 \
+            --instance-type t2.micro \
+            --key-name devops_exp_key \
+            --tag-specifications \
+              'ResourceType=instance,Tags=[{Key=Name,Value=github-ec2-demo},{Key=Project,Value=terraform-demo},{Key=Environment,Value=dev}]' \
+            --query 'Instances[0].InstanceId' \
+            --output text)
+
+          echo "EC2 Instance created successfully!"
+          echo "Instance ID: $INSTANCE_ID"
+
