@@ -13,9 +13,9 @@ resource "aws_subnet" "public_subnet_1" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "${var.project_name}-public-subnet-1"
+    Name        = "${var.project_name}-public-subnet-1"
     Environment = var.environment
-    Owner = var.owner
+    Owner       = var.owner
   }
 }
 
@@ -34,8 +34,8 @@ resource "aws_subnet" "public_subnet_2" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "${var.project_name}-public-subnet-2"
+    Name        = "${var.project_name}-public-subnet-2"
     Environment = var.environment
-    Owner = var.owner
+    Owner       = var.owner
   }
 }
